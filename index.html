@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Amtscup Pistole – Cup-Duell</title>
+<title>Amtscup Jungschützen – Cup-Duell</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -43,7 +43,7 @@ button{
 <body>
 <div class="container">
 
-<h1>Amtscup Pistole – Cup-Duell</h1>
+<h1>Amtscup Jungschützen – Cup-Duell</h1>
 
 <!-- Gruppenchef -->
 <div class="card">
@@ -88,9 +88,9 @@ button{
 </div>
 
 <script>
-/* ================= FIX & FERTIG ================= */
+/* ================= KONFIG ================= */
 const SCRIPT_URL =
-https://script.google.com/macros/s/AKfycbzM69ksxDdhS8yq6LrKOUVUoRjpc6R80gYtL-qkgoew1rsmTPk8G1HgkL9abhIG-PDj/exec
+"https://script.google.com/macros/s/AKfycbzTSku5sCe_J34LU49BHtuJK1gTux6ldG_LndStte6DPABoQ-38Nc_6hvh9LeKbnSrVmQ/exec";
 
 /* ================= GRUPPEN LADEN ================= */
 async function loadGroups(){
@@ -159,7 +159,7 @@ function sendResult(){
   }
 
   let mail =
-"AMTSCUP PISTOLE – RESULTAT\n\n"+
+"AMTSCUP JUNGSCHÜTZEN – RESULTAT\n\n"+
 "GRUPPENCHEF\n"+
 `${chef.value};${email.value}\n\n`;
 
@@ -199,16 +199,14 @@ function sendResult(){
   /* MAIL */
   location.href =
     "mailto:thomannpeter@bluewin.ch"+
-    "?subject="+encodeURIComponent("Amtscup Pistole – Resultat")+
+    "?subject="+encodeURIComponent("Amtscup Jungschützen – Resultat")+
     "&body="+encodeURIComponent(mail);
 
   /* GOOGLE TABELLE */
   fetch(SCRIPT_URL,{
     method:"POST",
-    headers:{
-      "Content-Type":"application/x-www-form-urlencoded"
-    },
-    body:"payload="+encodeURIComponent(JSON.stringify({ entries }))
+    headers:{"Content-Type":"application/x-www-form-urlencoded"},
+    body:"payload="+encodeURIComponent(JSON.stringify({entries}))
   });
 }
 
