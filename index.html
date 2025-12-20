@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>Amtscup Jungschützen – Cup-Duell</title>
+<title>Amtscup Pistole – Cup-Duell</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -43,7 +43,7 @@ button{
 <body>
 <div class="container">
 
-<h1>Amtscup Jungschützen – Cup-Duell</h1>
+<h1>Amtscup Pistole – Cup-Duell</h1>
 
 <!-- Gruppenchef -->
 <div class="card">
@@ -159,7 +159,7 @@ function sendResult(){
   }
 
   let mail =
-"AMTSCUP JUNGSCHÜTZEN – RESULTAT\n\n"+
+"AMTSCUP PISTOLE – RESULTAT\n\n"+
 "GRUPPENCHEF\n"+
 `${chef.value};${email.value}\n\n`;
 
@@ -183,6 +183,7 @@ function sendResult(){
       mail+=`${name};${jahr};${res}\n`;
 
       entries.push({
+        disziplin: "Pistole",   // <<< DAS ist der Schlüssel
         chef: chef.value,
         email: email.value,
         gruppe: gruppe,
@@ -199,7 +200,7 @@ function sendResult(){
   /* MAIL */
   location.href =
     "mailto:thomannpeter@bluewin.ch"+
-    "?subject="+encodeURIComponent("Amtscup Jungschützen – Resultat")+
+    "?subject="+encodeURIComponent("Amtscup Pistole – Resultat")+
     "&body="+encodeURIComponent(mail);
 
   /* GOOGLE TABELLE */
