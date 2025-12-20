@@ -89,8 +89,9 @@ button{
 
 <script>
 /* ================= KONFIG ================= */
+// 🔴 HIER DEINE FUNKTIONIERENDE WEBAPP-URL EINSETZEN
 const SCRIPT_URL =
-"https://script.google.com/macros/s/AKfycbzTSku5sCe_J34LU49BHtuJK1gTux6ldG_LndStte6DPABoQ-38Nc_6hvh9LeKbnSrVmQ/exec";
+"https://script.googleusercontent.com/macros/echo?user_content_key=DEINE_ECHTE_URL_HIER";
 
 /* ================= GRUPPEN LADEN ================= */
 async function loadGroups(){
@@ -205,11 +206,10 @@ function sendResult(){
   /* GOOGLE TABELLE */
   fetch(SCRIPT_URL,{
     method:"POST",
-    headers:{"Content-Type":"application/x-www-form-urlencoded"},
-    body:"payload="+encodeURIComponent(JSON.stringify({
-      app: "pistole",
-      entries
-    }))
+    headers:{
+      "Content-Type":"application/x-www-form-urlencoded"
+    },
+    body:"payload="+encodeURIComponent(JSON.stringify({ entries }))
   });
 }
 
