@@ -1,4 +1,4 @@
-<!doctype html>
+<!doctype html> 
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -146,12 +146,19 @@ function renderGroups(){
         <option value="w" ${r.g==="w"?"selected":""}>w</option>
       </select>
     </td>
-    <td class="res"><input value="${r.r||""}"></td>`;
+    <td class="res"><input type="number" min="0" max="100" value="${r.r||""}"></td>`;
    const i = tr.querySelectorAll("input,select");
    i[0].oninput = e => r.n = e.target.value;
    i[1].oninput = e => r.y = e.target.value;
    i[2].onchange = e => r.g = e.target.value;
-   i[3].oninput = e => { r.r = e.target.value; updateSum(c,g); };
+   i[3].oninput = e => { 
+     let v = +e.target.value || 0;
+     if(v > 100) v = 100;
+     if(v < 0) v = 0;
+     e.target.value = v;
+     r.r = v; 
+     updateSum(c,g); 
+   };
    tb.appendChild(tr);
   });
   groups.appendChild(c);
