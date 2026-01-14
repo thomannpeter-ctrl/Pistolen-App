@@ -151,13 +151,15 @@ function renderGroups(){
    i[0].oninput = e => r.n = e.target.value;
    i[1].oninput = e => r.y = e.target.value;
    i[2].onchange = e => r.g = e.target.value;
-   i[3].oninput = e => { 
-     let v = +e.target.value || 0;
-     if(v > 100) v = 100;
-     if(v < 0) v = 0;
-     e.target.value = v;
-     r.r = v; 
-     updateSum(c,g); 
+   i[3].oninput = e => {
+     let v = +e.target.value;
+     if(v > 100 || v < 0){
+       alert("Resultat darf nur zwischen 0 und 100 liegen!");
+       e.target.value = r.r || "";
+       return;
+     }
+     r.r = v;
+     updateSum(c,g);
    };
    tb.appendChild(tr);
   });
