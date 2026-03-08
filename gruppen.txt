@@ -1,3 +1,4 @@
+1 Heim;1;P014;Steffisburg PS;Schnittweier
 1 Gast;1;P001;Biglen PS;Shooters
 2 Heim;1;P002;Konolfingen PS;Ballenbühl
 2 Gast;1;P012;Münsingen PS;Bahnhof
