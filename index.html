@@ -1,4 +1,4 @@
-<!doctype html> 
+<!doctype html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -19,9 +19,9 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}
 th,td{border:1px solid #e5e7eb;padding:.35rem;text-align:center}
 th{background:#dbeafe}
 td.name input{width:100%}
-td.year input{width:70px;text-align:center}
-td.gender select{width:60px}
-td.res input{width:60px;text-align:center}
+td.year input{width:50px;text-align:center}
+td.gender select{width:70px}
+td.res input{width:50px;text-align:center}
 button{border:none;border-radius:999px;padding:.9rem;font-size:1rem;cursor:pointer;background:#2563eb;color:white;width:100%}
 .winner-ok{background:#dcfce7;padding:.7rem;border-radius:12px;font-weight:700}
 .winner-none{background:#e5e7eb;padding:.7rem;border-radius:12px}
@@ -127,7 +127,7 @@ function renderGroups(){
   c.innerHTML = `
    <h2>Schützen – Gruppe ${i+1}: ${g.name}</h2>
    <table>
-    <thead><tr><th>#</th><th>Name</th><th>Jahrgang</th><th>Gender</th><th>Resultat</th></tr></thead>
+    <thead><tr><th>#</th><th>Name</th><th>JG</th><th>w/m</th><th>Resultat</th></tr></thead>
     <tbody></tbody>
     <tfoot><tr><th colspan="4">Summe</th><th class="sum">0</th></tr></tfoot>
    </table>`;
@@ -210,7 +210,7 @@ function submitResult(){
  Object.values(state).forEach((g,idx)=>{
   const sum = g.rows.reduce((a,b)=>a+(+b.r||0),0);
   mailText += "GRUPPE " + (idx+1) + ": " + g.name + "\n";
-  mailText += "Nr; Name; Jahrgang; Gender; Resultat\n";
+  mailText += "Nr; Name; JG; w/m; Resultat\n";
   g.rows.forEach((r,i)=>{
    if(r.n || r.r){
     mailText +=
