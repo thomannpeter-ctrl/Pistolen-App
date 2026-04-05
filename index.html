@@ -42,14 +42,6 @@ Mindestens eine Gruppe muss komplett ausgefüllt sein.<br>
 Die Resultate gehen direkt in die Rangliste – bitte die Namen exakt und korrekt erfassen.<br>
 Nach dem Senden dem Mail das Standblatt als Datei oder Bild anhängen.
 </p>
-
-<p>
-<b>App zum Startbildschirm hinzufügen:</b><br>
-📱 <b>iPhone (Safari):</b> Seite öffnen → unten auf „Teilen“-Symbol tippen → „Zum Home-Bildschirm“ → Hinzufügen.<br>
-🤖 <b>Android (Chrome):</b> Seite öffnen → Menü (⋮) → „Zum Startbildschirm hinzufügen“.
-</p>
-
-<p>🔥 Danke für das Melden der Resultate über diese App</p>
 </div>
 
 <div class="card">
@@ -69,15 +61,6 @@ Nach dem Senden dem Mail das Standblatt als Datei oder Bild anhängen.
 </div>
 
 <div class="card">
-<h2>Wichtig</h2>
-<p>
-Nach dem Klicken auf <b>„Resultat übermitteln“</b> wird ein Mail geöffnet.<br>
-Bitte diesem Mail unbedingt das <b>Standblatt als Bild oder Datei anhängen</b>,
-sonst gilt das Resultat als unvollständig.
-</p>
-</div>
-
-<div class="card">
 <button onclick="submitResult()">🔵 Resultat übermitteln</button>
 </div>
 
@@ -90,7 +73,7 @@ sonst gilt das Resultat als unvollständig.
 
 <script>
 const RESULT_EMAIL = "thomannpeter@bluewin.ch";
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHT98gTQZXVlJDFdy0jlqu6oCOaJiHIjVcECT2u0yzMODYxEX5K-xZZlsyKTplbHUUXw/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyOW1rGIBJ8Bb3FXcnuhJIOd22LfaFOAt22HyBzHCVmeIsEPyQ9XwcA3VPeezUGDxFxFA/exec";
 const state = {};
 
 async function loadGroups(){
@@ -168,7 +151,6 @@ function renderGroups(){
     <td class="res"><input type="number" min="0" max="100" value="${r.r || ""}"></td>`;
 
    const f = tr.querySelectorAll("input,select");
-
    f[0].oninput = e => r.n = e.target.value.trim();
    f[1].oninput = e => r.y = e.target.value.trim();
    f[2].onchange = e => r.g = e.target.value;
