@@ -19,9 +19,9 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}
 th,td{border:1px solid #e5e7eb;padding:.35rem;text-align:center}
 th{background:#dbeafe}
 td.name input{width:100%}
-td.year input{width:50px;text-align:center}
+td.year input{width:70px;text-align:center}
 td.gender select{width:70px}
-td.res input{width:50px;text-align:center}
+td.res input{width:70px;text-align:center}
 button{border:none;border-radius:999px;padding:.9rem;font-size:1rem;cursor:pointer;background:#2563eb;color:white;width:100%}
 .winner-ok{background:#dcfce7;padding:.7rem;border-radius:12px;font-weight:700}
 .winner-none{background:#e5e7eb;padding:.7rem;border-radius:12px}
@@ -39,7 +39,7 @@ pre{white-space:pre-wrap;font-size:.85rem;background:#f1f5f9;padding:1rem;border
 <p>
 Du kannst eine oder zwei Gruppen melden, bei 3er Paarungen alle 3 Gruppen möglich.<br>
 Mindestens eine Gruppe muss komplett ausgefüllt sein.<br>
-Die Resultate gehen direkt in die Access-Ranglisten – bitte die Namen exakt und korrekt erfassen.<br>
+Die Resultate gehen direkt in die Rangliste – bitte die Namen exakt und korrekt erfassen.<br>
 Nach dem Senden dem Mail das Standblatt als Datei oder Bild anhängen.
 </p>
 
@@ -72,7 +72,7 @@ Nach dem Senden dem Mail das Standblatt als Datei oder Bild anhängen.
 <h2>Wichtig</h2>
 <p>
 Nach dem Klicken auf <b>„Resultat übermitteln“</b> wird ein Mail geöffnet.<br>
-Bitte diesem Mail unbedingt das <b>Standblatt als Bild oder Datei anhängen</b>,  
+Bitte diesem Mail unbedingt das <b>Standblatt als Bild oder Datei anhängen</b>,
 sonst gilt das Resultat als unvollständig.
 </p>
 </div>
@@ -90,7 +90,7 @@ sonst gilt das Resultat als unvollständig.
 
 <script>
 const RESULT_EMAIL = "thomannpeter@bluewin.ch";
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby0jpu1W_O6TCD-4XNGL9_WJlq2x3iByDD74wReUym2IqLirRVLfaMZLf_2KbpC0XAl/exec";
+const GOOGLE_SCRIPT_URL = "HIER_DEINE_WEBAPP_URL";
 const state = {};
 
 async function loadGroups(){
@@ -112,24 +112,43 @@ async function loadGroups(){
 
 function selectGroup(id){
  const name = document.getElementById(id).value;
- if(!name) return;
+ if(!name){
+  delete state[id];
+  renderGroups();
+  return;
+ }
  if(!state[id]) state[id] = { name, rows:[{},{},{},{}] };
  else state[id].name = name;
  renderGroups();
 }
 
 function renderGroups(){
- groups.innerHTML="";
+ const groups = document.getElementById("groups");
+ groups.innerHTML = "";
+
  Object.keys(state).forEach((id,i)=>{
   const g = state[id];
   const c = document.createElement("div");
-  c.className="card";
+  c.className = "card";
   c.innerHTML = `
    <h2>Schützen – Gruppe ${i+1}: ${g.name}</h2>
    <table>
-    <thead><tr><th>#</th><th>Name</th><th>JG</th><th>w/m</th><th>Resultat</th></tr></thead>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>JG</th>
+        <th>w/m</th>
+        <th>Resultat</th>
+      </tr>
+    </thead>
     <tbody></tbody>
-    <tfoot><tr><th colspan="4">Summe</th><th class="sum">0</th></tr></tfoot>
+    <tfoot>
+      <tr>
+        <th colspan="4">Summe</th>
+        <th class="sum">0</th>
+      </tr>
+    </tfoot>
    </table>`;
   const tb = c.querySelector("tbody");
 
@@ -137,70 +156,89 @@ function renderGroups(){
    const tr = document.createElement("tr");
    tr.innerHTML = `
     <td>${idx+1}</td>
-    <td class="name"><input value="${r.n||""}"></td>
-    <td class="year"><input value="${r.y||""}"></td>
+    <td class="name"><input value="${r.n || ""}"></td>
+    <td class="year"><input value="${r.y || ""}"></td>
     <td class="gender">
       <select>
         <option value=""></option>
-        <option value="m" ${r.g==="m"?"selected":""}>m</option>
-        <option value="w" ${r.g==="w"?"selected":""}>w</option>
+        <option value="m" ${r.g==="m" ? "selected" : ""}>m</option>
+        <option value="w" ${r.g==="w" ? "selected" : ""}>w</option>
       </select>
     </td>
-    <td class="res"><input type="number" min="0" max="100" value="${r.r||""}"></td>`;
-   const i = tr.querySelectorAll("input,select");
-   i[0].oninput = e => r.n = e.target.value;
-   i[1].oninput = e => r.y = e.target.value;
-   i[2].onchange = e => r.g = e.target.value;
-   i[3].oninput = e => {
-     let v = +e.target.value;
+    <td class="res"><input type="number" min="0" max="100" value="${r.r || ""}"></td>`;
+
+   const f = tr.querySelectorAll("input,select");
+
+   f[0].oninput = e => r.n = e.target.value.trim();
+   f[1].oninput = e => r.y = e.target.value.trim();
+   f[2].onchange = e => r.g = e.target.value;
+   f[3].oninput = e => {
+     if(e.target.value === ""){
+       r.r = "";
+       updateSum(c,g);
+       return;
+     }
+     let v = Number(e.target.value);
      if(v > 100 || v < 0){
-       alert("Resultat darf nur zwischen 0 und 100 liegen!");
+       alert("Resultat darf nur zwischen 0 und 100 liegen.");
        e.target.value = r.r || "";
        return;
      }
      r.r = v;
      updateSum(c,g);
    };
+
    tb.appendChild(tr);
   });
+
   groups.appendChild(c);
   updateSum(c,g);
  });
+
  calcWinner();
 }
 
 function updateSum(card,g){
- card.querySelector(".sum").textContent =
-  g.rows.reduce((a,b)=>a+(+b.r||0),0);
+ const total = g.rows.reduce((a,b)=>a+(Number(b.r)||0),0);
+ card.querySelector(".sum").textContent = total;
  calcWinner();
 }
 
 function calcWinner(){
+ const winner = document.getElementById("winner");
+
  const arr = Object.values(state)
-  .map(g=>({ n:g.name, t:g.rows.reduce((a,b)=>a+(+b.r||0),0) }))
-  .filter(x=>x.t>0);
+  .map(g => ({
+    n: g.name,
+    t: g.rows.reduce((a,b)=>a+(Number(b.r)||0),0)
+  }))
+  .filter(x => x.t > 0);
+
  if(arr.length < 2){
   winner.textContent = "–";
   winner.className = "winner-none";
   return;
  }
+
  arr.sort((a,b)=>b.t-a.t);
  winner.className = "winner-ok";
- let html = `🏆 Sieger: ${arr[0].n} (${arr[0].t})<br>`;
- if(arr[1]) html += `🥈 Zweiter: ${arr[1].n} (${arr[1].t})<br>`;
- if(arr[2]) html += `🥉 Dritter: ${arr[2].n} (${arr[2].t})`;
+
+ let html = `🏆 Sieger: ${arr[0].n} (${arr[0].t})`;
+ if(arr[1]) html += `<br>🥈 Zweiter: ${arr[1].n} (${arr[1].t})`;
+ if(arr[2]) html += `<br>🥉 Dritter: ${arr[2].n} (${arr[2].t})`;
+
  winner.innerHTML = html;
 }
 
 function isGroupComplete(g){
- return g.rows.every(r => r.n && r.y && r.g && r.r);
+ return g.rows.every(r => r.n && r.y && r.g && r.r !== "" && r.r !== null && r.r !== undefined);
 }
 
 function submitResult(){
-
  const hasComplete = Object.values(state).some(g => isGroupComplete(g));
+
  if(!hasComplete){
-  alert("Es kann nur gesendet werden, wenn mindestens eine Gruppe vollständig ausgefüllt ist.\nNicht alle Felder sind ausgefüllt.");
+  alert("Es kann nur gesendet werden, wenn mindestens eine Gruppe vollständig ausgefüllt ist.");
   return;
  }
 
@@ -208,45 +246,56 @@ function submitResult(){
  let payload = [];
 
  Object.values(state).forEach((g,idx)=>{
-  const sum = g.rows.reduce((a,b)=>a+(+b.r||0),0);
+  const sum = g.rows.reduce((a,b)=>a+(Number(b.r)||0),0);
+
   mailText += "GRUPPE " + (idx+1) + ": " + g.name + "\n";
-  mailText += "Nr; Name; JG; w/m; Resultat\n";
-  g.rows.forEach((r,i)=>{
-   if(r.n || r.r){
+  mailText += "Name; JG; w/m; Resultat\n";
+
+  g.rows.forEach((r)=>{
+   if(r.n && r.y && r.g && r.r !== "" && r.r !== null && r.r !== undefined){
     mailText +=
-     (i+1)+"; "+(r.n||"")+"; "+(r.y||"")+"; "+(r.g||"")+"; "+(r.r||"0")+"\n";
+      (r.n || "") + "; " +
+      (r.y || "") + "; " +
+      (r.g || "") + "; " +
+      (r.r || 0) + "\n";
+
     payload.push({
-      gruppe:g.name,
-      nr:i+1,
-      name:r.n||"",
-      jahrgang:r.y||"",
-      gender:r.g||"",
-      resultat:r.r||0,
-      gruppenSumme:sum
+      gruppe: g.name,
+      name: r.n || "",
+      jahrgang: r.y || "",
+      gender: r.g || "",
+      resultat: r.r || 0
     });
    }
   });
+
   mailText += "Summe: " + sum + "\n\n";
  });
 
  document.getElementById("output").textContent = mailText;
 
  window.open(
-  "mailto:"+RESULT_EMAIL+
-  "?subject="+encodeURIComponent("Pistolen Amtscup Resultat")+
-  "&body="+encodeURIComponent(mailText)
+  "mailto:" + RESULT_EMAIL +
+  "?subject=" + encodeURIComponent("Pistolen Amtscup Resultat") +
+  "&body=" + encodeURIComponent(mailText)
  );
 
- const form = document.createElement("form");
- form.method="POST";
- form.action=GOOGLE_SCRIPT_URL;
- const inp = document.createElement("input");
- inp.type="hidden";
- inp.name="data";
- inp.value=JSON.stringify({ daten: payload, zeit: new Date().toISOString() });
- form.appendChild(inp);
- document.body.appendChild(form);
- form.submit();
+ fetch(GOOGLE_SCRIPT_URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+  },
+  body: "data=" + encodeURIComponent(JSON.stringify({ daten: payload }))
+ })
+ .then(response => response.text())
+ .then(text => {
+   console.log("Google Script Antwort:", text);
+   alert("Resultat erfolgreich an Google Tabelle übermittelt.");
+ })
+ .catch(error => {
+   console.error(error);
+   alert("Fehler beim Übermitteln an Google Tabelle.");
+ });
 }
 
 loadGroups();
