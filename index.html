@@ -290,7 +290,7 @@ function submitResult(){
  .then(response => response.text())
  .then(text => {
    console.log("Google Script Antwort:", text);
-   alert("Resultat erfolgreich an Google Tabelle übermittelt.");
+   alert(text);
  })
  .catch(error => {
    console.error(error);
