@@ -1,20 +1,17 @@
-1 Heim;1;P003;Konolfingen PS;Grube
-1 Gast;1;P013;Münsingen PS;Bahnhof
-2 Heim;1;P004;Konolfingen PS;Inseli
-2 Gast;1;P019;Zäziwil- Gr'h'st. PS;Eyweid
-3 Heim;1;P011;Linden PS;Visier
-3 Gast;1;P005;Konolfingen PS;U20
-4 Heim;1;P008;Linden PS;GmbH
-4 Gast;1;P018;Zäziwil- Gr'h'st. PS;Die Daltons
-5 Heim;1;P010;Linden PS;Pistoleros
-5 Gast;1;P012;Münsingen PS;Aare
-6 Heim;1;P015;Steffisburg PS;Schnittweier
-6 Gast;1;P006;Konolfingen PS;Locher
-7 Heim;1;P020;Zäziwil- Gr'h'st. PS;Krone
-7 Gast;1;P016;Wichtrach-Tahlgut PS;Hecht
-8 Heim;1;P009;Linden PS;Knaller
-8 Gast;1;P001;Biglen PS;Shooters
-9 Heim;1;P017;Zäziwil- Gr'h'st. PS;Buhlenberg
-9 Gast;1;P002;Konolfingen PS;Ballenbühl
-10 Heim;1;P007;Linden PS;9mm
-10 Gast;1;P014;Steffisburg PS;Moos
+1 Heim;2;P010;Linden PS;Pistoleros
+1 Gast;2;P019;Zäziwil- Gr'h'st. PS;Eyweid
+2 Heim;2;P014;Steffisburg PS;Moos
+2 Gast;2;P003;Konolfingen PS;Grube
+3 Heim;2;P013;Münsingen PS;Bahnhof
+3 Gast;2;P011;Linden PS;Visier
+4 Heim;2;P015;Steffisburg PS;Schnittweier
+4 Gast;2;P008;Linden PS;GmbH
+5 Heim;2;P007;Linden PS;9mm
+5 Gast;2;P020;Zäziwil- Gr'h'st. PS;Krone
+6 Heim;2;P016;Wichtrach-Tahlgut PS;Hecht
+6 Gast;2;P018;Zäziwil- Gr'h'st. PS;Die Daltons
+7 Heim;2;P002;Konolfingen PS;Ballenbühl
+7 Gast;2;P009;Linden PS;Knaller
+8 Heim;2;P006;Konolfingen PS;Locher
+8 Gast;2;P001;Biglen PS;Shooters
+
